@@ -402,9 +402,11 @@ function main() {
   const outDir = arg("out", "_site");
   const inboxDir = arg("inbox", "_inbox");
   const read = (p, d) => (p && existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : d);
-  const pagesData = read(join(ROOT, "data/pages.json"), {});
+  // --data：作品とページのデータの場所。ひな形のリポジトリでは、見本（sample）を使う
+  const dataDir = join(ROOT, arg("data", "data"));
+  const pagesData = read(join(dataDir, "pages.json"), {});
   const r = build({
-    data: read(join(ROOT, "data/items.json"), { items: [] }), pagesData,
+    data: read(join(dataDir, "items.json"), { items: [] }), pagesData,
     release: read(arg("release"), { assets: [] }),
     inboxFiles: existsSync(inboxDir) ? readdirSync(inboxDir) : [],
     repo: arg("repo", process.env.GITHUB_REPOSITORY || "owner/repo"),
@@ -413,7 +415,8 @@ function main() {
   const w = (p, s) => { mkdirSync(dirname(join(outDir, p)), { recursive: true }); writeFileSync(join(outDir, p), s); };
   mkdirSync(outDir, { recursive: true });
   for (const p of ["admin", "assets"]) cpSync(join(ROOT, p), join(outDir, p), { recursive: true });
-  if (existsSync(join(ROOT, "media"))) cpSync(join(ROOT, "media"), join(outDir, "media"), { recursive: true });
+  const mediaDir = join(ROOT, arg("media", "media"));
+  if (existsSync(mediaDir)) cpSync(mediaDir, join(outDir, "media"), { recursive: true });
   for (const [p, s] of r.out) w(p, s);
   w("assets/custom.css", r.designCss + (typeof pagesData.css === "string" ? pagesData.css : ""));
   w("site.json", JSON.stringify({ repo: r.repo, release_tag: "files" }));

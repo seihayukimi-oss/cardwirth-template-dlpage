@@ -36,6 +36,12 @@ jobs:
           OWNER=${GH_REPO%%/*}; NAME=${GH_REPO#*/}
           SITE="https://${OWNER,,}.github.io/${NAME}/"
           TYPE=$(gh api "repos/$GH_REPO/pages" --jq .build_type 2>/dev/null || true)
+          # ひな形のリポジトリ（テンプレートの印つき）では、見本のデータ（sample）で見本のサイトを作る
+          if [ "$(gh api "repos/$GH_REPO" --jq .is_template 2>/dev/null)" = "true" ] && [ -d sample ]; then
+            echo "data=sample" >> "$GITHUB_OUTPUT"; echo "media=sample/media" >> "$GITHUB_OUTPUT"; echo "inbox=sample/files" >> "$GITHUB_OUTPUT"
+          else
+            echo "data=data" >> "$GITHUB_OUTPUT"; echo "media=media" >> "$GITHUB_OUTPUT"; echo "inbox=_inbox" >> "$GITHUB_OUTPUT"
+          fi
           if [ "$TYPE" = "workflow" ]; then
             echo "ok=1" >> "$GITHUB_OUTPUT"
             echo "site=$SITE" >> "$GITHUB_OUTPUT"
@@ -74,12 +80,12 @@ jobs:
 
       - name: サイトを組み立てる
         if: steps.pages.outputs.ok == '1'
-        run: node scripts/build.mjs --release _release.json --inbox _inbox --out _site --plan _plan.json
+        run: node scripts/build.mjs --data "${{ steps.pages.outputs.data }}" --media "${{ steps.pages.outputs.media }}" --release _release.json --inbox "${{ steps.pages.outputs.inbox }}" --out _site --plan _plan.json
 
       - name: ファイルを置く・取得する・消す
         if: steps.pages.outputs.ok == '1'
         run: |
-          jq -r '.upload[]' _plan.json | while read -r n; do gh release upload files "_inbox/$n" --clobber; done
+          jq -r '.upload[]' _plan.json | while read -r n; do gh release upload files "${{ steps.pages.outputs.inbox }}/$n" --clobber; done
           jq -r '.counters[]' _plan.json | while read -r n; do printf 1 > "/tmp/$n"; gh release upload files "/tmp/$n" --clobber; done
           jq -r '.download[] | [.name, .to] | @tsv' _plan.json | while IFS=$'\t' read -r n to; do
             gh release download files -p "$n" -O "_site/$to" --clobber

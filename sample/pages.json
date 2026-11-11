@@ -1,0 +1,58 @@
+{
+  "next_id": 4,
+  "home": 1,
+  "menu": "*メニュー\n-[[トップ]]\n-[[サンプル店の紹介]]\n-[[書き方の見本]]\n*アップローダー\n#uploaders()\n*最近の更新\n#recent(3)\n",
+  "template": "",
+  "css": "",
+  "design": {
+    "menu_pos": "right",
+    "page_img_mode": "repeat",
+    "menu_sticky": true,
+    "header_sticky": true,
+    "footer_text": "CWシナリオ置き場（見本） ― このサイトは、ひな形の見本です",
+    "header_bg": "#24364a",
+    "header_fg": "#ffffff",
+    "page_bg": "#eef3f7",
+    "body_bg": "#ffffff",
+    "footer_bg": "#24364a",
+    "footer_fg": "#dddddd",
+    "link": "#2a6ebb"
+  },
+  "pages": [
+    {
+      "id": 1,
+      "title": "トップ",
+      "body": "&align(center){&size(22){''ようこそ！ ここは「CWシナリオ置き場（ひな形）」の見本のサイトです。''}}\n\n&align(center){このページも、管理ページから Wiki記法で書いています。ファイルはどれも、中身のない見本です（シナリオは入っていません）。}\n\n*シナリオ\nバナーの画像を押すと、そのままダウンロードできます。\n\n**サンプル店　ver1.02　店シナ／短編\n&dl(1){&ref(banner-shop.png)}\n\n店シナリオの見本です。[[くわしい紹介>サンプル店の紹介]]\n\n**テスト冒険譚　ver2.0　探索／Lv3以上\n&dlpage(2){&ref(banner-quest.png)}\n\nDLキーつきの作品の見本です。画像を押すと DLページへ進みます（DLキーは「mihon-2026」）。\n\n**デバッグ読みシナ　ver1.00　読み物／Py専用\n&dl(3){&ref(banner-read.png)}\n\n**サンプルの光　ver1.00　短編／Next仕様\n&dl(4){&ref(banner-light.png)}\n\n*DLカードで置く\n画像のかわりに、作品の情報つきのカードを置くこともできます。\n#dl(1)\n\n*ぜんぶの一覧\n1作品1行の一覧です。見出しを押すと並べ替え、上の欄で検索ができます。\n#dllist()\n\n*最近の更新\n#recent(5)\n\n*この見本について\n-[[作品の紹介ページの見本>サンプル店の紹介]]\n-[[書き方の見本（Wiki記法）>書き方の見本]]\n-[[限定公開のアップローダーの見本>>https://seihayukimi-oss.github.io/cardwirth-template-dlpage/u/mihonkikaku2026a/]]（一覧には出ず、URL を知っている人だけが見られます）\n-[[ひな形の入手と、はじめかた>>https://github.com/seihayukimi-oss/cardwirth-template-dlpage]]\n",
+      "tags": [],
+      "visibility": "public",
+      "key": "mihonpage0000001",
+      "created": "2026-11-10T03:00:00Z",
+      "updated": "2026-11-11T03:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "サンプル店の紹介",
+      "body": "&align(center){&ref(banner-shop.png)}\n\n*CardWirth 用シナリオ『サンプル店』 ver.1.02\n#contents\n\n**あらすじ\n――あなた達は、''見本''の店に立ち寄った。\n\n棚には、見本のアイテムと、見本の技能が並んでいる。\n店主は言う。「ここにあるのは、ぜんぶ見本だよ」\n\n**ダウンロード\n#dl(1)\n\n**仕様\n|~項目|内容|\n|対象レベル|1～3|\n|人数|1～6人|\n|形式|クラシック（1.50 以上）|\n|種類|店シナリオ／戦闘無し|\n\n**更新履歴\n-ver1.02　見本の文を直しました\n-ver1.01　見本のアイテムを足しました\n-ver1.00　公開\n\n[+]ネタバレ（押すと開きます）\nここに、クリアした人むけの話を書けます。\n[END]\n\n[[トップへ戻る>トップ]]\n",
+      "tags": [
+        "店シナ",
+        "紹介"
+      ],
+      "visibility": "public",
+      "key": "mihonpage0000002",
+      "created": "2026-11-10T03:00:00Z",
+      "updated": "2026-11-11T03:00:00Z"
+    },
+    {
+      "id": 3,
+      "title": "書き方の見本",
+      "body": "このページは、ページ（HP）で使える書き方の見本です。くわしい一覧は、ひな形の「docs/Wiki記法.md」にあります。\n\n#contents\n\n*文字の飾り\n''太字''　'''斜体'''　%%取り消し線%%　%%%下線%%%　&color(red){赤い字}　&color(white,#337ab7){色つきの背景}　&size(22){大きい字}　上付き&sup(){2}　注釈つきの文((ページの下に出ます))\n\n&align(center){中央に寄せた文}\n&align(right){右に寄せた文}\n\n*リスト\n-箇条書き\n--2段め\n---3段め\n+番号つき\n+番号つき\n\n*引用と、書いたとおりに出す枠\n>引用の文です。\n>2行めです。\n\n=|BOX|\nここは、書いたとおりに出ます。\n  空白も　そのまま　です。\n||=\n\n*表\n|~名前|種類|対象レベル|\n|サンプル店|店シナ|center:1～3|\n|テスト冒険譚|bgcolor(#ffe):探索|center:3～5|\n|>|center:2つをつなげたセル|center:―|\n\n*リンク\n-置き場の中のページ：[[トップ]]　[[サンプル店の紹介]]\n-外のサイト（別のタブで開く）：[[ひな形のページ>>https://github.com/seihayukimi-oss/cardwirth-template-dlpage]]\n-ページの中の場所：[[表のところへ>#h-4]]\n\n*画像と、押すとダウンロードできる画像\n&ref(banner-light.png,320)\n\n&dl(4){&ref(banner-light.png,320)}　← こちらは、押すとダウンロードします\n\n*折りたたみ\n[+]押すと開きます\n中身です。\n[END]\n\n*置き場の部品\n**DLカード（#dl）\n#dl(3)\n**アップローダーの一覧（#uploaders）\n#uploaders()\n**ページの一覧（#pagelist）\n#pagelist()\n",
+      "tags": [
+        "使い方"
+      ],
+      "visibility": "public",
+      "key": "mihonpage0000003",
+      "created": "2026-11-10T03:00:00Z",
+      "updated": "2026-11-11T03:00:00Z"
+    }
+  ]
+}
