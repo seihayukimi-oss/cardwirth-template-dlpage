@@ -143,7 +143,9 @@ export function renderWiki(src, ctx = {}) {
         flush();
         const buf = [];
         for (i++; i < lines.length && lines[i].trim() !== "||="; i++) buf.push(lines[i]);
-        out += `<pre class="${m[1].toUpperCase() === "BOX" ? "box" : m[1].toUpperCase() === "AA" ? "aa" : "plain"}">${esc(buf.join("\n"))}</pre>`;
+        const kind = m[1].toUpperCase();
+        if (kind === "SAMPLE") out += `<div class="sample"><div class="sample-t">書き方</div><pre class="code">${esc(buf.join("\n"))}</pre><div class="sample-t">こう表示されます</div><div class="sample-out">${blocks(buf)}</div></div>`;
+        else out += `<pre class="${{ BOX: "box", AA: "aa", CODE: "code" }[kind] || "plain"}">${esc(buf.join("\n"))}</pre>`;
       } else if ((m = /^\[([+-])\](.*)$/.exec(line))) {
         flush();
         const buf = [];

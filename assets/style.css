@@ -109,3 +109,10 @@ a.dllink img { transition:opacity .15s; } a.dllink:hover img { opacity:.85; }
 #easy .row { align-items:flex-start; } #easy > .row { flex-wrap:wrap; gap:6px 24px; } #easy h3 { font-size:15px; margin:22px 0 4px; padding-bottom:4px; border-bottom:1px solid var(--line); }
 #easy .field:has(input[data-key$="_img"]) .row input[type=text] { flex:1 1 auto; max-width:480px; }
 .r18note { color:var(--warn); }
+/* ---- コードの枠（コピーのボタンつき）と、書き方の見本 ---- */
+.codewrap { position:relative; margin:10px 0; }
+.codewrap pre.code { margin:0; padding-right:90px; max-height:340px; overflow:auto; white-space:pre; background:#f6f8fa; }
+.codewrap .copycode { position:absolute; top:6px; right:6px; }
+.sample { border:1px solid var(--line); border-radius:6px; padding:10px 14px; margin:14px 0; }
+.sample-t { font-size:12px; font-weight:700; color:var(--sub); margin:6px 0 2px; }
+.sample-out { border-top:1px dashed var(--line); padding-top:4px; }

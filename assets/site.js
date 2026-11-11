@@ -56,6 +56,19 @@ for (const table of document.querySelectorAll("table.list[data-sortable]")) {
   q?.addEventListener("input", draw);
 }
 
+// ---- コードの枠：コピーのボタン ----
+for (const pre of document.querySelectorAll("pre.code")) {
+  const text = pre.textContent;
+  const b = el("button", { type: "button", className: "btn small copycode" }, "コピー");
+  b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(text); b.textContent = "コピーしました"; } catch { b.textContent = "コピーできませんでした"; }
+    setTimeout(() => (b.textContent = "コピー"), 1500);
+  });
+  const wrap = el("div", { className: "codewrap" });
+  pre.replaceWith(wrap);
+  wrap.append(b, pre);
+}
+
 // ---- URL の欄：コピーのボタン ----
 for (const box of document.querySelectorAll("input.copybox")) {
   const b = el("button", { type: "button", className: "btn small" }, "コピー");

@@ -445,7 +445,7 @@ function editor(value) {
     btn("表", "表", insert("\n|~見出し1|見出し2|\n|内容1|内容2|\n")), btn("―", "水平線", insert("\n----\n")),
     btn("リンク", "リンク", wrap("[[", ">https://]]", "文字")), btn("画像", "画像を置いて入れる", () => imgFile.click()),
     btn("色", "文字の色", wrap("&color(red){", "}", "文字")), btn("サイズ", "文字の大きさ", wrap("&size(20){", "}", "文字")), btn("中央", "中央に寄せる", wrap("&align(center){", "}", "文字")),
-    btn("たたむ", "折りたたみ", wrap("\n[+]見出し\n", "\n[END]\n", "中身")), btn("目次", "目次", insert("\n#contents\n")), embed, imgFile);
+    btn("たたむ", "折りたたみ", wrap("\n[+]見出し\n", "\n[END]\n", "中身")), btn("コード", "コードの枠（コピーのボタンつき）", wrap("\n=|CODE|\n", "\n||=\n", "ここに書いた文字が、そのまま出ます")), btn("目次", "目次", insert("\n#contents\n")), embed, imgFile);
   return { ta, bar };
 }
 let pageEdit = null; // { id | "new" | "menu" }

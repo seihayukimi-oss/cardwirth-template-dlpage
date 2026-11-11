@@ -147,6 +147,12 @@ test("デザインのかんたん設定：色・画像・メニューの位置�
   assert.match(designCss({ menu_pos: "left", menu_sticky: true }), /row-reverse[\s\S]*position:sticky/);
 });
 
+test("コードの枠と書き方の見本：コードは文字のまま出し、見本は出来上がりも並べる", () => {
+  const html = renderWiki("=|CODE|\n''太字'' <b>\n[+]x\n||=\n=|SAMPLE|\n''太字''\n-一\n||=");
+  assert.match(html, /<pre class="code">&#39;&#39;太字&#39;&#39; &lt;b&gt;\n\[\+\]x<\/pre>/);
+  assert.match(html, /<div class="sample">.*<pre class="code">&#39;&#39;太字&#39;&#39;\n-一<\/pre>.*<div class="sample-out"><p><strong>太字<\/strong><\/p><ul><li>一<\/li><\/ul><\/div><\/div>/s);
+});
+
 test("危ないファイル名は受け付けない", () => {
   assert.equal(safeFileName(".."), "");
   assert.equal(safeFileName("a/b\\c.zip"), "a_b_c.zip");
