@@ -14,6 +14,7 @@ const VIS_NAME = { public: "公開", unlisted: "限定公開（URL を知って�
 const VIS_SHORT = { public: "公開", unlisted: "限定公開", private: "非公開" };
 const VIS_ORDER = ["public", "unlisted", "private"];
 const stricter = (a, b) => VIS_ORDER[Math.max(VIS_ORDER.indexOf(a), VIS_ORDER.indexOf(b))];
+const R18_NOTE = "R18（成人向け）の作品・素材は、GitHub には置けません（GitHub の決まりのため。DLキーつき・限定公開・非公開でも同じです）。R15 も、あからさまな性的な描写や過度に残酷な描写のあるものは置けません。";
 const COMPAT_OPT = [["", "形式に合わせる"], ["verified", "確認済み"], ["expected", "動くはず"], ["no", "非対応"], ["unknown", "未確認"]];
 
 let repo = "", token = "", branch = "main", siteBase = "";
@@ -191,7 +192,7 @@ function drawBoard() {
       author: h("input", { type: "text", maxLength: 80, size: 18, value: it?.author || "" }),
       type: select([["scenario", "シナリオ"], ["skin", "スキン"], ["material", "素材"], ["other", "そのほか"]], it?.type || "scenario"),
       format: select([["classic", "クラシック（1.50）"], ["next", "Next仕様"], ["wsn", "Py仕様（WSN）"], ["none", "シナリオ以外"]], it?.format || "classic"),
-      rating: select([["all", "全年齢"], ["r15", "R15"], ["r18", "R18（成人向け）"]], it?.rating || "all"),
+      rating: select([["all", "全年齢"], ["r15", "R15"]], it?.rating === "r15" ? "r15" : "all"),
       convert: select([["self", "自己責任ならOK"], ["allowed", "自由"], ["forbidden", "しないでほしい"]], it?.convert || "self"),
       cw150: select(COMPAT_OPT, it?.compat?.cw150), next: select(COMPAT_OPT, it?.compat?.next), py: select(COMPAT_OPT, it?.compat?.py),
       vis: select([["inherit", `アップローダーに合わせる（今は「${VIS_SHORT[b.visibility]}」）`], ...Object.entries(VIS_NAME)], it?.visibility || "inherit"),
@@ -261,8 +262,9 @@ function drawBoard() {
         + "DLキーは保存されないので、忘れないように控えてください。短いキーは当てられやすいので、長めがおすすめです。"),
       locked && h("div", { class: "field" }, h("label", {}, f.unlock, " DLキーを外して、だれでもダウンロードできるようにする")),
       field("コメント", f.comment),
-      field("タグ（「、」で区切る）", h("div", {}, f.tags, presets)),
+      field("タグ（「、」で区切る）", h("div", {}, f.tags, presets), "「R18」などのタグを付けても、R18 の作品は置けません。" + R18_NOTE),
       h("div", { class: "row" }, field("バージョン", f.version), field("作者名", f.author), field("種類", f.type), field("形式", f.format), field("対象年齢", f.rating), field("ほかの形式への変換", f.convert)),
+      h("p", { class: "note r18note" }, "対象年齢：" + R18_NOTE),
       h("div", { class: "field" }, h("label", {}, "対応エンジン"), h("div", { class: "row" }, h("label", {}, "1.50 ", f.cw150), h("label", {}, "Next ", f.next), h("label", {}, "Py ", f.py)),
         h("div", { class: "note" }, "「形式に合わせる」のままなら、形式から自動で決めます（例：Next仕様 → 1.50 は非対応）。")),
       h("div", { class: "row" }, field("公開範囲", f.vis), field("アップローダー", f.board), field("紹介ページ", f.page)),
@@ -288,7 +290,7 @@ function drawBoard() {
       tags: h("input", { type: "text" }), author: h("input", { type: "text", maxLength: 80, size: 18 }),
       type: select([["scenario", "シナリオ"], ["skin", "スキン"], ["material", "素材"], ["other", "そのほか"]], "scenario"),
       format: select([["classic", "クラシック（1.50）"], ["next", "Next仕様"], ["wsn", "Py仕様（WSN）"], ["none", "シナリオ以外"]], "classic"),
-      rating: select([["all", "全年齢"], ["r15", "R15"], ["r18", "R18（成人向け）"]], "all"),
+      rating: select([["all", "全年齢"], ["r15", "R15"]], "all"),
       convert: select([["self", "自己責任ならOK"], ["allowed", "自由"], ["forbidden", "しないでほしい"]], "self"),
       vis: select([["inherit", `アップローダーに合わせる（今は「${VIS_SHORT[b.visibility]}」）`], ...Object.entries(VIS_NAME)], "inherit"),
       share: h("input", { type: "checkbox" }),
@@ -353,7 +355,7 @@ function drawBoard() {
       h("div", { class: "row" }, picker, total),
       h("div", { class: "tablewrap" }, h("table", { class: "list" }, h("thead", {}, h("tr", {}, ["タイトル（必須）", "バージョン", "コメント", "ファイル名", "容量", ""].map((t) => h("th", {}, t)))), tbody)),
       h("h3", {}, "全部の作品に共通の設定"),
-      field("タグ（「、」で区切る）", c.tags),
+      field("タグ（「、」で区切る）", c.tags, R18_NOTE),
       h("div", { class: "row" }, field("作者名", c.author), field("種類", c.type), field("形式", c.format), field("対象年齢", c.rating), field("ほかの形式への変換", c.convert), field("公開範囲", c.vis)),
       h("div", { class: "field" }, h("label", {}, c.share, " CWカタログで共有する（JSON 形式で公開する）")),
       h("div", { class: "row" }, h("button", { type: "button", class: "btn primary", id: "bulksave", onclick: submit }, "まとめて登録する"), h("button", { type: "button", class: "btn", onclick: () => formBox.replaceChildren() }, "やめる"), step)));
